@@ -72,17 +72,22 @@ void FileParser::ComputePFunction() {
   text_function_.pop_front();
 
   if(k == pattern_.size()) {
+    entries_.push_back(GetEntry());
     positions_.push_back(position_);
   }
 }
 
 void FileParser::Parse(const std::string &pattern) {
   pattern_ = pattern;
+  positions_.clear();
+  //entries_.clear();
+
   InitPatternFunction();
   InitTextBuffer();
   InitTextFunction();
 
   position_ = text_buffer_.size() + 1;
+
   char c = stream_.get();
   while (std::char_traits<char>::not_eof(c)) {
     text_buffer_.pop_front();
@@ -91,7 +96,40 @@ void FileParser::Parse(const std::string &pattern) {
     ++position_;
     c = stream_.get();
   }
+  stream_.clear();
+  stream_.seekg(0);// Rewind
 }
 const std::vector<size_t> &FileParser::GetPositions() {
   return positions_;
+}
+FileParser::~FileParser() {
+  if (stream_.is_open()) {
+    stream_.close();
+  }
+}
+void FileParser::SetPadding(size_t pad) {
+  padding_ = pad;
+}
+std::string FileParser::GetEntry() {
+  std::string buff;
+  if (position_ < padding_ + pattern_.size()) {
+    stream_.seekg(0);
+  } else {
+    stream_.seekg(position_ - padding_ - pattern_.size());
+  }
+
+  size_t readNum = 0;
+  char c = stream_.get();
+  while(std::char_traits<char>::not_eof(c) && readNum < 2 * padding_ + pattern_.size()) {
+    buff.push_back(c);
+    ++readNum;
+    c = stream_.get();
+  }
+
+  stream_.seekg(position_);
+
+  return buff;
+}
+const std::vector<std::string> &FileParser::GetEntries() {
+  return entries_;
 }
