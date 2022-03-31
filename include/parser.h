@@ -4,6 +4,7 @@
 #include <deque>
 #include <vector>
 
+
 class FileParser {
  public:
   explicit FileParser() = default;
@@ -17,10 +18,10 @@ class FileParser {
   const std::vector<std::string>& GetEntries();
 
  private:
-  void ComputePFunction();
+  void ComputePFunction(char symbol);
   void InitPatternFunction();
-  void InitTextBuffer();
-  void InitTextFunction();
+  void InitFuncValue();
+  void InitTextFunction(std::vector<char>& text_buffer_);
   std::string GetEntry();
 
  private:
@@ -29,8 +30,7 @@ class FileParser {
   size_t position_;
   size_t padding_{7};
   std::ifstream stream_;
-  std::deque<char> text_buffer_;
-  std::deque<size_t> text_function_;
+  size_t func_value_{0};
   std::vector<size_t> pattern_function_;
   std::vector<size_t> positions_;
   std::vector<std::string> entries_;

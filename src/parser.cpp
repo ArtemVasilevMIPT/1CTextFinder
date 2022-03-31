@@ -9,17 +9,19 @@ void FileParser::Init(const std::string& fileName) {
   stream_.open(fileName);
 }
 
-void FileParser::InitTextBuffer() {
-  text_buffer_.clear();
+void FileParser::InitFuncValue() {
+  std::vector<char> text_buffer;
 
   for (size_t i = 0; i < pattern_.size(); ++i) {
     char c = stream_.get();
     if (std::char_traits<char>::not_eof(c)) {
-      text_buffer_.push_back(c);
+      text_buffer.push_back(c);
     } else {
       break;
     }
   }
+  position_ = text_buffer.size() + 1;
+  InitTextFunction(text_buffer);
 }
 
 void FileParser::InitPatternFunction() {
@@ -39,9 +41,8 @@ void FileParser::InitPatternFunction() {
   }
 }
 
-void FileParser::InitTextFunction() {
-  text_function_.clear();
-  text_function_.resize(text_buffer_.size());
+void FileParser::InitTextFunction(std::vector<char>& text_buffer_) {
+  std::vector<size_t> text_function_(text_buffer_.size(), 0);
 
   for (size_t i = 0; i < text_buffer_.size(); ++i) {
     size_t k = (i == 0) ? 0 : text_function_[i - 1];
@@ -57,19 +58,19 @@ void FileParser::InitTextFunction() {
       positions_.push_back(i + 1);
     }
   }
+  func_value_ = text_function_.back();
 }
 
-void FileParser::ComputePFunction() {
-  size_t i = text_buffer_.size() - 1;
-  size_t k = (i == 0) ? 0 : text_function_[i];
-  while (k > 0 && text_buffer_[i] != pattern_[k]) {
+void FileParser::ComputePFunction(char symbol) {
+  size_t i = pattern_.size() - 1;
+  size_t k = (i == 0) ? 0 : func_value_;
+  while (k > 0 && symbol != pattern_[k]) {
     k = pattern_function_[k - 1];
   }
-  if (text_buffer_[i] == pattern_[k]) {
+  if (symbol == pattern_[k]) {
     ++k;
   }
-  text_function_.push_back(k);
-  text_function_.pop_front();
+  func_value_ = k;
 
   if(k == pattern_.size()) {
     entries_.push_back(GetEntry());
@@ -80,19 +81,14 @@ void FileParser::ComputePFunction() {
 void FileParser::Parse(const std::string &pattern) {
   pattern_ = pattern;
   positions_.clear();
-  //entries_.clear();
+  entries_.clear();
 
   InitPatternFunction();
-  InitTextBuffer();
-  InitTextFunction();
-
-  position_ = text_buffer_.size() + 1;
+  InitFuncValue();
 
   char c = stream_.get();
   while (std::char_traits<char>::not_eof(c)) {
-    text_buffer_.pop_front();
-    text_buffer_.push_back(c);
-    ComputePFunction();
+    ComputePFunction(c);
     ++position_;
     c = stream_.get();
   }

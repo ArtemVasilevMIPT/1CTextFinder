@@ -16,17 +16,22 @@ int main() {
 
     parser.Parse(pattern);
 
-    auto pos = parser.GetPositions();
+    if (parser.GetPositions().empty()) {
+      std::cout << "Вхождения шаблона " << pattern << " не найдены" << std::endl;
+    } else {
 
-    std::cout << "Найдено " << pos.size() << " вхождений" << std::endl;
+      std::cout << "Найдено " << parser.GetPositions().size() << " вхождений" << std::endl;
 
-    std::cout << "Первое вхождение:" << std::endl;
-    std::cout << parser.GetEntries()[0] << std::endl;
-
+      std::cout << "Первое вхождение:" << std::endl;
+      std::cout << "<------/\\------>" << std::endl;
+      std::cout << parser.GetEntries()[0] << std::endl;
+      std::cout << "<------/\\------>" << std::endl;
+    }
     std::cout << "Желаете породолжить? [Д/н]" << std::endl;
     std::string ans;
     std::cin >> ans;
-    if (ans != "Д" && ans != "д" && ans != "Y" && ans == "y") {
+
+    if (ans != "Д" && ans != "д" && ans != "Y" && ans != "y") {
       break;
     }
   }
