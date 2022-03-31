@@ -83,6 +83,8 @@ void FileParser::Parse(const std::string &pattern) {
   InitTextFunction();
 
   position_ = text_buffer_.size() + 1;
+  positions_.clear();
+
   char c = stream_.get();
   while (std::char_traits<char>::not_eof(c)) {
     text_buffer_.pop_front();
@@ -91,6 +93,7 @@ void FileParser::Parse(const std::string &pattern) {
     ++position_;
     c = stream_.get();
   }
+  stream_.seekg(0); // Rewind
 }
 const std::vector<size_t> &FileParser::GetPositions() {
   return positions_;

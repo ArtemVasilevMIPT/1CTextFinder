@@ -9,15 +9,23 @@ int main() {
   FileParser parser;
   parser.Init(path);
 
-  std::string pattern;
-  std::cout << "Введите шаблон" << std::endl;
-  std::cin >> pattern;
+  while (true) {
+    std::string pattern;
+    std::cout << "Введите шаблон" << std::endl;
+    std::cin >> pattern;
 
-  parser.Parse(pattern);
+    parser.Parse(pattern);
 
-  auto pos = parser.GetPositions();
+    auto pos = parser.GetPositions();
 
-  std::cout << "Найдено " << pos.size() << " вхождений" << std::endl;
+    std::cout << "Найдено " << pos.size() << " вхождений" << std::endl;
 
+    std::cout << "Желаете породолжить? [Д/н]" << std::endl;
+    std::string ans;
+    std::cin >> ans;
+    if (ans == "н" || ans == "n" || ans == "N" || ans == "Н") {
+      break;
+    }
+  }
   return 0;
 }
