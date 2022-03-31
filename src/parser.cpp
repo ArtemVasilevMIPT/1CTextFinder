@@ -93,7 +93,7 @@ void FileParser::Parse(const std::string &pattern) {
     c = stream_.get();
   }
   stream_.clear();
-  stream_.seekg(0);// Rewind
+  stream_.seekg(0); // Rewind
 }
 const std::vector<size_t> &FileParser::GetPositions() {
   return positions_;
