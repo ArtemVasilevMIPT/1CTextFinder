@@ -15,14 +15,14 @@ int main() {
     std::cin >> pattern;
 
     parser.Parse(pattern);
-    if (parser.GetPositions().empty()) {
+    if (!parser.Found()) {
       std::cout << "Вхождения шаблона " << pattern << " не найдены" << std::endl;
     } else {
-      std::cout << "Найдено " << parser.GetPositions().size() << " вхождений" << std::endl;
-      std::cout << "Позиция первого вхождения: " << parser.GetPositions()[0] << std::endl;
+      std::cout << "Найдено " << parser.GetEntriesNumber() << " вхождений" << std::endl;
+      std::cout << "Позиция первого вхождения: " << parser.GetPositionByNumber(1) << std::endl;
       std::cout << "Первое вхождение:" << std::endl;
       std::cout << "<------/\\------>" << std::endl;
-      std::cout << parser.GetEntries()[0] << std::endl;
+      std::cout << parser.GetEntryByNumber(1) << std::endl;
       std::cout << "<------\\/------>" << std::endl;
     }
     std::cout << "Желаете породолжить? [Д/н]" << std::endl;
@@ -32,6 +32,7 @@ int main() {
     if (ans != "Д" && ans != "д" && ans != "Y" && ans != "y") {
       break;
     }
+    std::cout << std::endl;
   }
   return 0;
 }
