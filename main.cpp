@@ -32,6 +32,7 @@ int main() {
     if (ans != "Д" && ans != "д" && ans != "Y" && ans != "y") {
       break;
     }
+    std::cout << std::endl;
   }
   return 0;
 }
