@@ -55,7 +55,7 @@ void FileParser::InitTextFunction(std::vector<char>& text_buffer_) {
     text_function_[i] = k;
 
     if(text_function_[i] == pattern_.size()) {
-      positions_.push_back(i + 1);
+      positions_.push_back(i + 1 - pattern_.size());
     }
   }
   func_value_ = text_function_.back();
@@ -74,7 +74,7 @@ void FileParser::ComputePFunction(char symbol) {
 
   if(k == pattern_.size()) {
     entries_.push_back(GetEntry());
-    positions_.push_back(position_);
+    positions_.push_back(position_ - pattern_.size());
   }
 }
 
@@ -98,6 +98,7 @@ void FileParser::Parse(const std::string &pattern) {
 const std::vector<size_t> &FileParser::GetPositions() {
   return positions_;
 }
+
 FileParser::~FileParser() {
   if (stream_.is_open()) {
     stream_.close();
