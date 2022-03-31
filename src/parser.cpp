@@ -78,12 +78,13 @@ void FileParser::ComputePFunction() {
 
 void FileParser::Parse(const std::string &pattern) {
   pattern_ = pattern;
+  positions_.clear();
+
   InitPatternFunction();
   InitTextBuffer();
   InitTextFunction();
 
   position_ = text_buffer_.size() + 1;
-  positions_.clear();
 
   char c = stream_.get();
   while (std::char_traits<char>::not_eof(c)) {
@@ -93,8 +94,14 @@ void FileParser::Parse(const std::string &pattern) {
     ++position_;
     c = stream_.get();
   }
-  stream_.seekg(0); // Rewind
+  stream_.clear();
+  stream_.seekg(0);// Rewind
 }
 const std::vector<size_t> &FileParser::GetPositions() {
   return positions_;
+}
+FileParser::~FileParser() {
+  if (stream_.is_open()) {
+    stream_.close();
+  }
 }

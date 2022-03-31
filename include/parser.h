@@ -8,6 +8,7 @@ class FileParser {
  public:
   explicit FileParser() = default;
   explicit FileParser(const std::string& fileName) : name_(fileName), stream_(name_) {}
+  ~FileParser();
 
   void Init(const std::string& fileName);
   void Parse(const std::string& pattern);
