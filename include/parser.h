@@ -16,6 +16,10 @@ class FileParser {
   const std::vector<size_t>& GetPositions();
   void SetPadding(size_t pad);
   const std::vector<std::string>& GetEntries();
+  size_t GetEntriesNumber();
+  std::string GetEntryByNumber(size_t pos);
+  size_t GetPositionByNumber(size_t pos);
+  bool Found();
 
  private:
   void ComputePFunction(char symbol);

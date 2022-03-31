@@ -1,8 +1,6 @@
 #include "../include/parser.h"
 #include <string>
 
-
-
 void FileParser::Init(const std::string& fileName) {
   if(stream_.is_open()) {
     stream_.close();
@@ -130,4 +128,25 @@ std::string FileParser::GetEntry() {
 }
 const std::vector<std::string> &FileParser::GetEntries() {
   return entries_;
+}
+
+size_t FileParser::GetEntriesNumber() {
+  return positions_.size();
+}
+std::string FileParser::GetEntryByNumber(size_t pos) {
+  if (entries_.size() <= pos || pos <= 0) {
+    throw std::runtime_error("Invalid entry number");
+  } else {
+    return entries_[pos - 1];
+  }
+}
+size_t FileParser::GetPositionByNumber(size_t pos) {
+  if (positions_.size() <= pos || pos <= 0) {
+    throw std::runtime_error("Invalid entry number");
+  } else {
+    return positions_[pos - 1];
+  }
+}
+bool FileParser::Found() {
+  return !positions_.empty();
 }

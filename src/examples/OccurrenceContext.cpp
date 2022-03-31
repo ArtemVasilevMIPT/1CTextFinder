@@ -14,7 +14,7 @@ int main() {
   // Stop timer
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-  std::string occ = parser.GetEntries()[0];
+  std::string occ = parser.GetEntryByNumber(1);
 
   std::cout << "Контекст первого вхождений слова 'Казак': "  << std::endl;
   std::cout << occ << std::endl;

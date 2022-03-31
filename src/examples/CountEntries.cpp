@@ -14,7 +14,7 @@ int main() {
   // Stop timer
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-  size_t num = parser.GetPositions().size();
+  size_t num = parser.GetEntriesNumber();
 
   std::cout << "Количество вхождений слова 'Казак': " << num << std::endl;
   std::cout << "Поиск занял " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()

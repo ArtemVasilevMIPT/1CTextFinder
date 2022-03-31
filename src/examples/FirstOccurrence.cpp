@@ -13,7 +13,7 @@ int main() {
   // Stop timer
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-  size_t pos = parser.GetPositions()[0];
+  size_t pos = parser.GetPositionByNumber(1);
 
   std::cout << "Позиция первого вхождения слова 'Казак': " << pos << std::endl;
   std::cout << "Поиск занял " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()
