@@ -1,6 +1,8 @@
 #include "../include/parser.h"
 #include <string>
 
+
+
 void FileParser::Init(const std::string& fileName) {
   if(stream_.is_open()) {
     stream_.close();
