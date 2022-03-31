@@ -151,3 +151,6 @@ size_t FileParser::GetPositionByNumber(size_t pos) {
 bool FileParser::Found() {
   return !positions_.empty();
 }
+bool FileParser::Opened() {
+  return stream_.is_open();
+}

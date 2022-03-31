@@ -1,13 +1,19 @@
 #include <parser.h>
 
 int main() {
-
-  std::cout << "Введите путь к файлу: ";
-  std::string path;
-  std::cin >> path;
-
   FileParser parser;
-  parser.Init(path);
+
+  while (!parser.Opened()) {
+    std::cout << "Введите путь к файлу: ";
+    std::string path;
+    std::cin >> path;
+    parser.Init(path);
+
+    if (!parser.Opened()) {
+      std::cout << "Не удалось открыть файл, попробуйте снова" << std::endl;
+    }
+  }
+
 
   while (true) {
     std::string pattern;

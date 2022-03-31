@@ -25,6 +25,8 @@ class FileParser {
   size_t GetPositionByNumber(size_t pos);
   // Returns true if at least one entry has been found, false otherwise
   bool Found();
+  // Checks if the file was opened successfully
+  bool Opened();
 
  private:
   // Recomputes prefix function during the step on the algorithm
