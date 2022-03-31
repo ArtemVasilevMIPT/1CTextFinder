@@ -20,10 +20,13 @@ int main() {
 
     std::cout << "Найдено " << pos.size() << " вхождений" << std::endl;
 
+    std::cout << "Первое вхождение:" << std::endl;
+    std::cout << parser.GetEntries()[0] << std::endl;
+
     std::cout << "Желаете породолжить? [Д/н]" << std::endl;
     std::string ans;
     std::cin >> ans;
-    if (ans == "н" || ans == "n" || ans == "N" || ans == "Н") {
+    if (ans != "Д" && ans != "д" && ans != "Y" && ans == "y") {
       break;
     }
   }
